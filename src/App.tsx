@@ -8,7 +8,7 @@ import { Button } from 'primereact/button'
 function App () {
   return <BrowserRouter>
     <main className='flex flex-col overflow-y-hidden'>
-      <section className='basis-16 p-4 flex items-center border-b border-surface-500'>
+      <section className='basis-12 flex items-center border-b border-surface-500'>
         <Link to="/">
           <Button severity="secondary" icon="pi pi-home" rounded text/>
         </Link>
