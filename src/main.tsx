@@ -18,7 +18,7 @@ const init = async () => {
   }
   // -- Initialize and mount the App
   createRoot(
-  document.getElementById('root')!
+    document.getElementById('root')!
   ).render(<Root/>)
 }
 
