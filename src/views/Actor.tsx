@@ -2,7 +2,12 @@ import { useLogin, useLogout, usePrivy } from '@privy-io/react-auth'
 import { Button } from 'primereact/button'
 import { useEffect } from 'react'
 
-export default function () {
+interface Props {
+  disableSignup?: boolean
+  name: string
+}
+
+export default function ({ disableSignup = false, name }: Props) {
   const { logout } = useLogout()
   const { login } = useLogin({
     onError: (e) => {
@@ -10,12 +15,13 @@ export default function () {
     },
     onComplete: console.log
   })
+
   const { ready, authenticated } = usePrivy()
   useEffect(
     () => {
       if (ready && !authenticated) {
         login({
-          disableSignup: true
+          disableSignup
         })
       }
     },
@@ -23,7 +29,7 @@ export default function () {
   )
   return ready && authenticated && <>
     <h2>
-      Buyer
+      {name}
     </h2>
     <Button onClick={logout}>Logout</Button>
   </>

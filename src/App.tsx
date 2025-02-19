@@ -1,40 +1,39 @@
-import { BrowserRouter, Route, Routes  } from 'react-router'
-import { PrivyProvider } from '@privy-io/react-auth'
+import { BrowserRouter, Link, Route, Routes  } from 'react-router'
 import Home from '@/views/Home'
-import Seller from '@/views/Seller'
-import Buyer from '@/views/Buyer'
+import Actor from '@/views/Actor'
+import PrivyForSellers from '@/components/privyForSellers'
+import PrivyForBuyers from '@/components/privyForBuyers'
+import { Button } from 'primereact/button'
 
 function App () {
-  return (
-    <BrowserRouter>
-      {/* Sellers */}
-      <PrivyProvider
-        appId={import.meta.env.VITE_PRIVY_S_APP_ID}
-        clientId={import.meta.env.VITE_PRIVY_S_CLIENT_ID}
-        config={{
-          loginMethods: ['email']
-        }}>
+  return <BrowserRouter>
+    <main className='flex flex-col overflow-y-hidden'>
+      <section className='basis-16 p-4 flex items-center border-b border-surface-500'>
+        <Link to="/">
+          <Button severity="secondary" icon="pi pi-home" rounded text/>
+        </Link>
+      </section>
+      <section className='flex-grow overflow-y-auto p-4'>
         <Routes>
-          <Route path="/seller" element={<Seller/>} />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/seller"
+            element={
+              <PrivyForSellers>
+                <Actor disableSignup name='Seller'/>
+              </PrivyForSellers>
+            } />
+          <Route
+            path="/buyer"
+            element={
+              <PrivyForBuyers>
+                <Actor name='Buyer'/>
+              </PrivyForBuyers>
+            } />
         </Routes>
-      </PrivyProvider>
-      {/* Buyers */}
-      <PrivyProvider
-        appId={import.meta.env.VITE_PRIVY_B_APP_ID}
-        clientId={import.meta.env.VITE_PRIVY_B_CLIENT_ID}
-        config={{
-          loginMethods: ['email']
-        }}>
-        <Routes>
-          <Route path="/buyer" element={<Buyer />} />
-        </Routes>
-      </PrivyProvider>
-      {/* Others (no association with Privy users) */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
-  )
+      </section>
+    </main>
+  </BrowserRouter>
 }
 
 export default App
