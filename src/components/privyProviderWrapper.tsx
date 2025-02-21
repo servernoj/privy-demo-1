@@ -27,15 +27,14 @@ export default function ({ children }: React.PropsWithChildren) {
   useEffect(
     () => {
       const providerFor = location.pathname.match(/[/](?<isFor>[^/]*)$/)?.groups?.isFor
-      console.log('Detected providerFor:', providerFor)
       if (providerFor && providerFor in privyProviderConfigs) {
         setPrivyProviderProps(privyProviderConfigs[providerFor])
       }
     },
     [location]
   )
-  console.log(privyProviderProps?.appId)
-  return <PrivyProvider {...privyProviderProps} >
+  console.log(privyProviderProps?.appId === 'cm4d0ss4i014z8gwspnrdw63c' ? 'Seller' : 'Buyer')
+  return <PrivyProvider {...privyProviderProps} key={location.key}>
     {children}
   </PrivyProvider>
 }

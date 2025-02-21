@@ -10,11 +10,11 @@ import App from '@/App'
 const init = async () => {
   const Root = () => {
     return (
-      <StrictMode>
-        <PrimeReactProvider>
-          <App />
-        </PrimeReactProvider>
-      </StrictMode>
+      // <StrictMode>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+      // </StrictMode>
     )
   }
   createRoot(
