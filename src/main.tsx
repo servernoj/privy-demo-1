@@ -6,6 +6,7 @@ import '@/assets/main.css'
 import 'primeicons/primeicons.css'
 import App from '@/App'
 
+
 const init = async () => {
   const Root = () => {
     return (
@@ -16,7 +17,6 @@ const init = async () => {
       </StrictMode>
     )
   }
-  // -- Initialize and mount the App
   createRoot(
     document.getElementById('root')!
   ).render(<Root/>)
