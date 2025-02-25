@@ -18,7 +18,7 @@ function App () {
                 loginMethods: ['email']
               }
             }}
-            url={`${window.location.href}`}
+            url={`${window.location.origin}/seller`}
           >
             <Actor name='Seller' disableSignup/>
           </IFramedProvider>
