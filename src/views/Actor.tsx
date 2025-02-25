@@ -1,7 +1,6 @@
-import { useLogin, useLogout, usePrivy } from '@privy-io/react-auth'
+import { useLogin, useLogout, useModalStatus, usePrivy } from '@privy-io/react-auth'
 import { Button } from 'primereact/button'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router'
 
 interface Props {
   disableSignup?: boolean
@@ -9,14 +8,11 @@ interface Props {
 }
 
 export default function ({ disableSignup = false, name }: Props) {
-  const navigate = useNavigate()
+  const { isOpen: isModalOpen } = useModalStatus()
   const { logout } = useLogout()
   const { login } = useLogin({
     onError: (e) => {
       console.error('---', e)
-      if (e === 'exited_auth_flow') {
-        navigate(-1)
-      }
     },
     onComplete: console.log
   })
@@ -24,18 +20,18 @@ export default function ({ disableSignup = false, name }: Props) {
   const { ready, authenticated } = usePrivy()
   useEffect(
     () => {
-      if (ready && !authenticated) {
+      if (ready && !isModalOpen && !authenticated) {
         login({
           disableSignup
         })
       }
     },
-    [ready, authenticated]
+    [ready, authenticated, isModalOpen]
   )
-  return ready && authenticated && <>
-    <h2>
+  return ready && authenticated && <section className='flex flex-col items-start gap-8'>
+    <h2 className='p-0 m-0'>
       {name}
     </h2>
     <Button onClick={logout}>Logout</Button>
-  </>
+  </section>
 }

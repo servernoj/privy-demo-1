@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig(
-  () => {
+  ({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), '')
     return {
       plugins: [
         react()
@@ -13,18 +14,12 @@ export default defineConfig(
           '@': fileURLToPath(new URL('./src', import.meta.url))
         }
       },
-      build: {
-        chunkSizeWarningLimit: 1024,
-        rollupOptions: {
-          output: {
-            manualChunks (id) {
-              const component = id.match(/rampoc[/]apps[/]ui[/]src[/](views|components)[/](?<name>.+)[.]tsx/)?.groups?.name
-              if (component) {
-                return `comp-${component}`
-              }
-            }
-          }
-        }
+      server: {
+        port: 5173,
+        allowedHosts: [
+          env.VITE_BUYER_IFRAME_HOSTNAME
+        ],
+        host: '0.0.0.0'
       }
     }
   }
