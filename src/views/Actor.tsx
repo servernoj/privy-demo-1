@@ -1,6 +1,7 @@
 import { useLogin, useLogout, usePrivy } from '@privy-io/react-auth'
 import { Button } from 'primereact/button'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 interface Props {
   disableSignup?: boolean
@@ -8,10 +9,14 @@ interface Props {
 }
 
 export default function ({ disableSignup = false, name }: Props) {
+  const navigate = useNavigate()
   const { logout } = useLogout()
   const { login } = useLogin({
     onError: (e) => {
       console.error('---', e)
+      if (e === 'exited_auth_flow') {
+        navigate(-1)
+      }
     },
     onComplete: console.log
   })

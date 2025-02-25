@@ -34,7 +34,11 @@ export default function ({ children }: React.PropsWithChildren) {
     [location]
   )
   console.log(privyProviderProps?.appId === 'cm4d0ss4i014z8gwspnrdw63c' ? 'Seller' : 'Buyer')
-  return <PrivyProvider {...privyProviderProps} key={location.key}>
+  return <PrivyProvider
+    appId={privyProviderProps.appId}
+    clientId={privyProviderProps.clientId}
+    config={privyProviderProps.config}
+    key={location.key}>
     {children}
   </PrivyProvider>
 }
